@@ -159,7 +159,7 @@ namespace Couchcoding.Logbert.Dialogs.Docking
 
           if (lastNode.Parent != null)
           {
-            lastNode.ForeColor = lastNode.Parent.ForeColor;
+            lastNode.ForeColor = ThemeManager.CurrentApplicationTheme.ColorPalette.ContentForeground;
             lastNode.Parent.Expand();
           }
         }
@@ -169,13 +169,15 @@ namespace Couchcoding.Logbert.Dialogs.Docking
         }
       }
 
-      if (treeView.SelectedNode == null && treeView.Nodes.Count > 0)
+      if (treeView.Nodes.Count > 0)
       {
-        // Initial select the very first node popupulated.
-        treeView.SelectedNode = treeView.Nodes[0];
+        if (treeView.SelectedNode == null)
+        {
+          // Initial select the very first node popupulated.
+          treeView.SelectedNode = treeView.Nodes[0];
+        }
 
-        SetNodeColor(
-            treeView.Nodes[0]
+        SetNodeColor(treeView.Nodes[0]
           , ThemeManager.CurrentApplicationTheme.ColorPalette.ContentForeground
           , ThemeManager.CurrentApplicationTheme.ColorPalette.SelectionForeground
           , ThemeManager.CurrentApplicationTheme.ColorPalette.SelectionForegroundFocused
@@ -229,8 +231,7 @@ namespace Couchcoding.Logbert.Dialogs.Docking
 
       try
       {
-        SetNodeColor(
-            tvLoggerTree.Nodes[0]
+        SetNodeColor(tvLoggerTree.Nodes[0]
           , ThemeManager.CurrentApplicationTheme.ColorPalette.ContentForegroundDimmed
             , ThemeManager.CurrentApplicationTheme.ColorPalette.SelectionForeground
             , ThemeManager.CurrentApplicationTheme.ColorPalette.SelectionForegroundFocused
@@ -238,8 +239,7 @@ namespace Couchcoding.Logbert.Dialogs.Docking
 
         if (e.Node != null)
         {
-          SetNodeColor(
-              e.Node
+          SetNodeColor(e.Node
             , ThemeManager.CurrentApplicationTheme.ColorPalette.ContentForeground
             , ThemeManager.CurrentApplicationTheme.ColorPalette.SelectionForeground
             , ThemeManager.CurrentApplicationTheme.ColorPalette.SelectionForegroundFocused
@@ -294,14 +294,16 @@ namespace Couchcoding.Logbert.Dialogs.Docking
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
-      if (disposing && (components != null))
+      if (disposing)
       {
-        components.Dispose();
-      }
+        components?.Dispose();
 
-      if (mLogFilterHandler != null)
-      {
-        mLogFilterHandler.UnregisterFilterProvider(this);
+        if (mLogFilterHandler != null)
+        {
+          mLogFilterHandler.UnregisterFilterProvider(this);
+        }
+
+        ClearAll();
       }
 
       base.Dispose(disposing);
@@ -351,12 +353,6 @@ namespace Couchcoding.Logbert.Dialogs.Docking
           ? messages
           : messages.GetRange(messages.Count - delta, delta);
 
-        if (newLogMessages.Count > 0)
-        {
-          // Avoid partial visible tree nodes.
-          //tvLoggerTree.SuspendDrawing();
-        }
-
         foreach (LogMessage message in newLogMessages)
         {
           PopulateTreeView(
@@ -369,7 +365,6 @@ namespace Couchcoding.Logbert.Dialogs.Docking
       finally
       {
         tvLoggerTree.AfterSelect += TvLoggerTreeAfterSelect;
-        //tvLoggerTree.ResumeDrawing();
       }
     }
 
@@ -524,7 +519,7 @@ namespace Couchcoding.Logbert.Dialogs.Docking
       bounds.Y -= 1;
       bounds.X += 1;
 
-      if (e.Node.Level == 0 && e.Node.PrevNode == null)
+      if (e.Node.Level == 0 && e.Node.Parent == null)
       {
         bounds = new Rectangle(
             tvLoggerTree.Margin.Size.Width + ThemeManager.CurrentApplicationTheme.Resources.Images["FrmLogTreeNodeExpanded"].Width + 9

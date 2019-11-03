@@ -69,6 +69,7 @@
             // LogDockPanel
             // 
             this.LogDockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
             this.LogDockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.LogDockPanel.Location = new System.Drawing.Point(0, 26);
             this.LogDockPanel.Name = "LogDockPanel";
@@ -325,7 +326,7 @@
             this.cmsSaveMessagesCsv});
             this.tsbSaveMessages.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSaveMessages.Name = "tsbSaveMessages";
-            this.tsbSaveMessages.Size = new System.Drawing.Size(29, 23);
+            this.tsbSaveMessages.Size = new System.Drawing.Size(13, 23);
             this.tsbSaveMessages.Text = "Save Messages";
             // 
             // cmsSaveMessagesRaw
@@ -420,6 +421,7 @@
             // 
             // txtTimeShift
             // 
+            this.txtTimeShift.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTimeShift.Enabled = false;
             this.txtTimeShift.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
             this.txtTimeShift.Name = "txtTimeShift";
@@ -448,35 +450,35 @@
             // tsbTimeShiftUnitMillisecond
             // 
             this.tsbTimeShiftUnitMillisecond.Name = "tsbTimeShiftUnitMillisecond";
-            this.tsbTimeShiftUnitMillisecond.Size = new System.Drawing.Size(180, 22);
+            this.tsbTimeShiftUnitMillisecond.Size = new System.Drawing.Size(135, 22);
             this.tsbTimeShiftUnitMillisecond.Text = "Millisecond";
             this.tsbTimeShiftUnitMillisecond.Click += new System.EventHandler(this.TsbTimeShiftUnitClicked);
             // 
             // tsbTimeShiftUnitSecond
             // 
             this.tsbTimeShiftUnitSecond.Name = "tsbTimeShiftUnitSecond";
-            this.tsbTimeShiftUnitSecond.Size = new System.Drawing.Size(180, 22);
+            this.tsbTimeShiftUnitSecond.Size = new System.Drawing.Size(135, 22);
             this.tsbTimeShiftUnitSecond.Text = "Second";
             this.tsbTimeShiftUnitSecond.Click += new System.EventHandler(this.TsbTimeShiftUnitClicked);
             // 
             // tsbTimeShiftUnitMinute
             // 
             this.tsbTimeShiftUnitMinute.Name = "tsbTimeShiftUnitMinute";
-            this.tsbTimeShiftUnitMinute.Size = new System.Drawing.Size(180, 22);
+            this.tsbTimeShiftUnitMinute.Size = new System.Drawing.Size(135, 22);
             this.tsbTimeShiftUnitMinute.Text = "Minute";
             this.tsbTimeShiftUnitMinute.Click += new System.EventHandler(this.TsbTimeShiftUnitClicked);
             // 
             // tsbTimeShiftUnitHour
             // 
             this.tsbTimeShiftUnitHour.Name = "tsbTimeShiftUnitHour";
-            this.tsbTimeShiftUnitHour.Size = new System.Drawing.Size(180, 22);
+            this.tsbTimeShiftUnitHour.Size = new System.Drawing.Size(135, 22);
             this.tsbTimeShiftUnitHour.Text = "Hour";
             this.tsbTimeShiftUnitHour.Click += new System.EventHandler(this.TsbTimeShiftUnitClicked);
             // 
             // tsbTimeShiftUnitDay
             // 
             this.tsbTimeShiftUnitDay.Name = "tsbTimeShiftUnitDay";
-            this.tsbTimeShiftUnitDay.Size = new System.Drawing.Size(180, 22);
+            this.tsbTimeShiftUnitDay.Size = new System.Drawing.Size(135, 22);
             this.tsbTimeShiftUnitDay.Text = "Day";
             this.tsbTimeShiftUnitDay.Click += new System.EventHandler(this.TsbTimeShiftUnitClicked);
             // 

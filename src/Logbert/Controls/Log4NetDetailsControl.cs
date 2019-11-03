@@ -246,9 +246,11 @@ namespace Couchcoding.Logbert.Controls
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
-      if (disposing && (components != null))
+      if (disposing)
       {
-        components.Dispose();
+        components?.Dispose();
+
+        SelectLogMessage(null);
 
         if (mBoldCaptionFont != null)
         {
@@ -257,6 +259,17 @@ namespace Couchcoding.Logbert.Controls
       }
 
       base.Dispose(disposing);
+    }
+
+    /// <summary>
+    /// Handles the size changed event of the <see cref="Control"/>.
+    /// </summary>
+    protected override void OnSizeChanged(EventArgs e)
+    {
+      base.OnSizeChanged(e);
+
+      txtDataMessage.AdjustHeightToContent();
+      txtDataProperties.AdjustHeightToContent();
     }
 
     #endregion

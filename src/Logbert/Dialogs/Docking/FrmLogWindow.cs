@@ -475,8 +475,8 @@ namespace Couchcoding.Logbert.Dialogs.Docking
         else
         {
           Font logFont = FontCache.GetFontFromIdentifier(
-              Settings.Default.LogMessagesFontName
-            , Settings.Default.LogMessagesFontSize
+              e.CellStyle.Font.Name
+            , e.CellStyle.Font.Size
             , fontStyle);
 
           TextRenderer.DrawText(
@@ -505,12 +505,7 @@ namespace Couchcoding.Logbert.Dialogs.Docking
     /// <param name="e">The <see cref="LogMessageSelectedEventArgs"/> that may contain necessary information.</param>
     private void OnRaiseLogMessageSelectedEvent(LogMessageSelectedEventArgs e)
     {
-      EventHandler<LogMessageSelectedEventArgs> handler = OnLogMessageSelected;
-
-      if (handler != null)
-      {
-        handler(this, e);
-      }
+      OnLogMessageSelected?.Invoke(this, e);
     }
 
     /// <summary>
@@ -728,13 +723,16 @@ namespace Couchcoding.Logbert.Dialogs.Docking
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
-      if (disposing && (components != null))
+      if (disposing)
       {
         components.Dispose();
-      }
 
-      // Remove the settings change event handler.
-      Settings.Default.SettingChanging -= DefaultSettingChanging;
+        mFilteredLogMessages?.Clear();
+        mFilteredLogMessages = null;
+
+        // Remove the settings change event handler.
+        Settings.Default.SettingChanging -= DefaultSettingChanging;
+      }
 
       base.Dispose(disposing);
     }
@@ -973,6 +971,8 @@ namespace Couchcoding.Logbert.Dialogs.Docking
               , dtgLogMessages.DefaultCellStyle.Font.Size + 1
               , FontStyle.Regular);
 
+            dtgLogMessages.Font = dtgLogMessages.DefaultCellStyle.Font;
+
             ++mRowHeight;
 
             dtgLogMessages.AutoResizeRows(
@@ -1013,6 +1013,8 @@ namespace Couchcoding.Logbert.Dialogs.Docking
                 dtgLogMessages.DefaultCellStyle.Font.Name
               , dtgLogMessages.DefaultCellStyle.Font.Size - 1
               , FontStyle.Regular);
+
+            dtgLogMessages.Font = dtgLogMessages.DefaultCellStyle.Font;
 
             --mRowHeight;
 
